@@ -37,10 +37,10 @@
 
 				<div class='description'>
 				<?php
-				echo $acteur['description'];?>
+				echo $acteur['description'];}?>
 			
-		}
-		?>
+		
+		
 
 </body>
 
