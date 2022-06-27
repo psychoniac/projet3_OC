@@ -27,7 +27,7 @@
 			$acteurselect = $requete->execute(['id' => $_GET['id']]);
 			$acteur = $requete->fetch();
 		
-			if (empty($acteur)); ?>
+			if (empty($acteur)); }?>
 				<img class="logo_acteur" src="img/<?php echo $acteur['logo']; ?>"></br>
 			
 				<div class='nom_acteur2'>
@@ -37,8 +37,17 @@
 
 				<div class='description'>
 				<?php
+<<<<<<< HEAD
 				echo $acteur['description'];}?>
 			
+=======
+				echo $acteur['description'];?>
+				</div>
+			</br>
+		<a href="like_dislike.php?vote=1 & id<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>">Like</a>	
+	</br>
+		<a href="like_dislike.php?vote=0 & id<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>">Dislike</a>	
+>>>>>>> like_dislike
 		
 		
 
