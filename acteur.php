@@ -54,32 +54,24 @@
 	</br>
 	<?php echo date('l \l\e jS'); ?>
 		<form method="post" action="acteur.php">
-			<textarea name="commentaire" id="commentaire" rows="5" cols="250"></textarea>
+			<textarea name="commentaire" name="commentaire" rows="5" cols="250"></textarea>
 			<input type="submit" name="envoyer">
 		</form>
 	</section>
 	        
 
-			<?php    //on verifie que l'utilisateur est bien connecté via $_SESSION['id']
- 
-				if (isset($_SESSION['username'])){
-					$commentaire = ($_POST['commentaire']);
-					
-				
-					if (isset($_POST['envoyer']) && !empty($_POST['commentaire'])){
-					//on insere le commentaire
-					$requeteSQL = $db->prepare("INSERT INTO post(post) VALUES (:post)");
-					$requeteSQL->execute();
+	<?php //on verifie que l'utilisateur est bien connecté via $_SESSION['id'],et que $_post envoyer et commentaire sont bien défini
+		if (isset($_SESSION['username']) && !empty($_POST['envoyer']) && !empty('commentaire')) {
+		 	$commentaire = $_POST['commentaire'];
+		 	$requete = prepare()
+		 } 
 	
+
 					}
 		
 					}	
 					 
 	?>
-	<?php include('footer.php'); ?>
-	
-
-
 
 </body>
 
