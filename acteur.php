@@ -20,7 +20,8 @@
 	
 	<h2>Les partenaires</h2>
 	<?php 
-		if (isset($_GET['id'])) {	
+		if (isset($_GET['id'])) 
+		{	
 			$requeteSQL = "SELECT * FROM acteur WHERE id_acteur = :id";
 			$requete = $db->prepare($requeteSQL);
 			$acteurselect = $requete->execute(['id' => $_GET['id']]);
@@ -36,57 +37,11 @@
 
 				<div class='description'>
 				<?php
-				echo $acteur['description'];
-		}
-	?></div>
-
-	<section class="commentaire">
-		<h4>Poster un commentaire</h4>
-	<?php 
-		if (isset ($_SESSION['username'])){
-			echo $_SESSION['username'];
-			echo "  ";
-			echo "poster un commentaire pour";
-			echo "   ";
-			echo $_GET['nom'];
+				echo $acteur['description'];?>
+			
 		}
 		?>
-	</br>
-	<?php echo date('l \l\e jS'); ?>
-		<form method="post" action="acteur.php">
-			<textarea name="commentaire" name="commentaire" rows="5" cols="250"></textarea>
-			<input type="submit" name="envoyer">
-		</form>
-	</section>
-	        
-
-	<?php //on verifie que l'utilisateur est bien connecté via $_SESSION['id'],et que $_post envoyer et commentaire sont bien défini
-		if (isset($_SESSION['username']) && !empty($_POST['envoyer']) && !empty('commentaire')) {
-		 	$commentaire = $_POST['commentaire'];
-		 	$requete = prepare()
-		 } 
-	
-
-<<<<<<< HEAD
-					}
-		
-					}	
-					 
-	?>
-=======
-
-
-
-
-	?>
-
-	
-
-
->>>>>>> acteur
 
 </body>
 
 </html>
-
-
