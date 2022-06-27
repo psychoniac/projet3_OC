@@ -1,4 +1,4 @@
-<footer>
+<section class=footer>
 	
 	<article class="contact">
 		<h3>Contact</h3>
@@ -18,7 +18,7 @@
 		</ul>
 
 	</article>
+</section>	
 	
-	<p id="copyright">Copyright: GBAF Année 2022</p>
+	<h4 class="copyright">Copyright: GBAF Année 2022</h4>
 
-</footer>
