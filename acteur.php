@@ -27,26 +27,42 @@
 			$acteurselect = $requete->execute(['id' => $_GET['id']]);
 			$acteur = $requete->fetch();
 		
-			if (empty($acteur)); }?>
+			if (empty($acteur)); ?>
 				<img class="logo_acteur" src="img/<?php echo $acteur['logo']; ?>"></br>
 			
 				<div class='nom_acteur2'>
-				<?php			
-				echo $acteur['acteur'];?></br>
+				<?php	echo $acteur['acteur'];?></br>
 				</div>
-
 				<div class='description'>
-				<?php
-
-				echo $acteur['description']; 
-		}
-		?>
+				<?php echo $acteur['description'];}?>
 				</div>
-			</br>
-		<a href="like_dislike.php?vote=1 & id<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>">Like</a>	
-	</br>
-		<a href="like_dislike.php?vote=0 & id<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>">Dislike</a>	
+				</br>
+				<a href= 'like_dislike.php?vote=1 & id=<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>' >Like</a>	
+				<a href= 'like_dislike.php?vote=0 & id=<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>' >Dislike</a>	
 
-	</body>
+			</br>
+
+	<?php echo date('l \l\e jS');
+		echo $_SESSION['username']; ?>
+	</br>
+	<?php echo "peut poster un commentaire"; ?>
+
+		<form method="post" action="acteur.php">
+			<textarea name="commentaire" name="commentaire" rows="5" cols="250"></textarea>
+			<input type="submit" name="envoyer">
+		</form>
+	</section>
+	        
+
+	<?php //on verifie que l'utilisateur est bien connecté via $_SESSION['id'],et que $_post envoyer et commentaire sont bien défini
+		//if (isset($_SESSION['username']) && !empty($_POST['envoyer']) && !empty('commentaire')) {
+		 //	$commentaire = $_POST['commentaire'];
+		 //	$requete = prepare()
+		//} 
+	
+		
+		?>
+		
+</body>
 
 </html>
