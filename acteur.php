@@ -34,15 +34,25 @@
 				<?php	echo $acteur['acteur'];?></br>
 				</div>
 				<div class='description'>
-				<?php echo $acteur['description'];}?>
-				</div>
+				<?php echo $acteur['description'];?>
+
+				<?php //on verifie que l'utilisateur est bien connecté via $_SESSION['id'],et que $_post envoyer et commentaire sont bien défini
+				if (isset($_SESSION['username']) && !empty($_POST['envoyer']) && !empty($_POST['commentaire']) && !empty($_GET['id_acteur'])) {
+		 			$commentaire = htmlspecialchars($_POST['commentaire']);
+		 			$userLog = htmlspecialchars($_SESSION['username']);
+		 			$acteurid = htmlspecialchars($_GET['id_acteur']);
+
+		 			$requete = $db->prepare("INSERT INTO post(id_post,id_user,id_acteur,date_add,post) VALUES(NULL,$userLog,$acteurid,$commentaire)");
+							$db->execute($requete);
+				}?>
+			</div>
 				</br>
 				<a href= 'like_dislike.php?vote=1 & id=<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>' >Like</a>	
 				<a href= 'like_dislike.php?vote=0 & id=<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>' >Dislike</a>	
 
 			</br>
 
-	<?php echo date('l \l\e jS');
+	<?php echo date_add();
 		echo $_SESSION['username']; ?>
 	</br>
 	<?php echo "peut poster un commentaire"; ?>
@@ -52,16 +62,10 @@
 			<input type="submit" name="envoyer">
 		</form>
 	</section>
+<?php };	?>
+				
 	        
 
-	<?php //on verifie que l'utilisateur est bien connecté via $_SESSION['id'],et que $_post envoyer et commentaire sont bien défini
-		//if (isset($_SESSION['username']) && !empty($_POST['envoyer']) && !empty('commentaire')) {
-		 //	$commentaire = $_POST['commentaire'];
-		 //	$requete = prepare()
-		//} 
-	
-		
-		?>
 		
 </body>
 
