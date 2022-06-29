@@ -41,12 +41,9 @@
 				$requete3 = $db->prepare('SELECT reponse FROM account WHERE username = $username');
 				$requete3->execute(array('username'));
 				$reponse = $requete3->rowcount();
-				//si la question et la reponse du formulaire sont egal a la question et la reponse de la bdd on affiche le mot de passe
+				//si la question et la reponse du formulaire sont egal a la question et la reponse de la bdd 
 				if ($questionSecrete == $question AND $reponseSecrete == $reponse) {
-					$requete4 = $db->prepare('SELECT password FROM account WHERE username = $username');
-					$requete4->execute(array('username'));
-					$password = $requete4->rowcount();
-					echo $password;
+					header(Location: 'nouveau_password.php');
 				} else {
 					echo 'un champ est vide';
 				}
