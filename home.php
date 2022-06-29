@@ -1,6 +1,7 @@
-<?php session_start(); ?>
-<?php include('connexion_bdd.php'); ?>
-
+<?php 
+	include('connexion_bdd.php');
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,10 +11,7 @@
 	</head>
 	
 	<body>	
-		<?php 
-			include('en_tete.php');
-			//echo '$_SESSION['username']';
-		?>
+		<?php include('en_tete.php'); ?>
 		<section class="presentation">
 			<h1>GBAF</h1>
 			<h3>Présentation de GBAF</h3>
@@ -43,7 +41,8 @@
 			<p><div class='descritpion'>
 					<?php 
 					$description = substr($acteur['description'],0,100).'...';
-					echo $description; ?> 
+					echo $description; 
+					?> 
 				<a href="acteur.php?id=<?php echo $acteur['id_acteur'];?> & nom=<?php echo $acteur['acteur'];?>">Lire la suite</a> </div></p>
 				</div>
 					<?php							
