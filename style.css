@@ -6,7 +6,7 @@ body
 	flex-wrap: wrap;
 	justify-content: space-around;
 	text-align: justify;
-	background-color: whitesmoke;
+	background-color: rgb(247, 223, 223);
 }
 header
 {
@@ -15,7 +15,7 @@ header
 	height: 15%;
 	text-align: center;
 	font-size: 45px;
-	color: darkred;
+	color: rgb(96, 22, 22);
 }
 .partenaire
 {
@@ -43,7 +43,7 @@ h2
 {
 	text-align: center;
 	font-size: 30px;
-	color: red;
+	color: rgb(121, 6, 6);
 }
 .acteur
 {
