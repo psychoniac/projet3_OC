@@ -1,11 +1,5 @@
 <?php session_start();
-?>
-<?php
-ini_set( 'display_errors', 1 );
-ini_set( 'display_startup_errors', 1 );
-error_reporting( E_ALL );
-?>
-<?php include( 'connexion_bdd.php' );
+ include( 'connexion_bdd.php' );
 ?>
 
 <!DOCTYPE html>
@@ -22,33 +16,35 @@ error_reporting( E_ALL );
 ?>
 
 <h2>Les partenaires</h2>
-<?php
-if ( isset( $_GET[ 'id' ] ) )
-{
+<?php if ( isset( $_GET[ 'id' ] ) ) : ?>
 
+<?php
     $requeteSQL = 'SELECT * FROM acteur WHERE id_acteur = :id';
     $requete = $db->prepare( $requeteSQL );
     $acteurselect = $requete->execute( [ 'id' => $_GET[ 'id' ] ] );
     $acteur = $requete->fetch();
-
-    if ( empty( $acteur ) );
-    ?>
-    <img class = 'logo_acteur' src = "img/<?php echo $acteur['logo']; ?>"></br>
-
-    <div class = 'nom_acteur2'>
-    <?php	echo $acteur[ 'acteur' ];
-    ?></br>
-    </div>
-    <div class = 'description'>
-    <?php echo $acteur[ 'description' ];
-}
 ?>
-</div>
-</br>
-<a href = 'like_dislike.php?vote=1 & id=<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>' >Like</a>
-<a href = 'like_dislike.php?vote=0 & id=<?php echo $_GET['id']; ?> & user=<?php echo $_SESSION['username']; ?>' >Dislike</a>
+<?php if (!empty( $acteur ) ) : ?>
 
-</br>
+        <img class = 'logo_acteur' src = "img/<?php echo $acteur['logo']; ?>"></br>
+        <div class = 'nom_acteur2'>
+            <?php	echo $acteur[ 'acteur' ];?></br>
+        </div>
+        <div class = 'description'>
+            <?php echo $acteur[ 'description' ]; ?>
+        </div>
+        <a href = 'like_dislike.php?vote=1&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['username']; ?>' >Like</a>
+        <a href = 'like_dislike.php?vote=0&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['username']; ?>' >Dislike</a>
+        <form method = 'post' action = 'acteur.php'>
+        <textarea name = 'commentaire' name = 'commentaire' rows = '5' cols = '250'></textarea>
+        <input type = 'submit' name = 'envoyer'>
+        </form>
+        </section>
+
+<?php endif; ?>
+<?php endif; ?>
+
+
 
 <?php echo date( 'l \l\e jS' );
 echo $_SESSION[ 'username' ];
