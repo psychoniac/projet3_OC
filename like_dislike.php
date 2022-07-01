@@ -1,4 +1,5 @@
-<?php //on se connecte a la BDD 
+<?php session_start();  
+	//on se connecte a la BDD 
 	include('connexion_bdd.php');
 	//on check qu_un utilisateur est connecte et que les variable existe et ne sont pas null
 	if (!empty($_GET['t']) && !empty($_SESSION['username']) && !empty($_GET['id']))
