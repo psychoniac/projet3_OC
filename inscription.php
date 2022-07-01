@@ -1,53 +1,47 @@
 <?php session_start();
- 		include('connexion_bdd.php');
-		if (isset($_POST['inscription']))
-		{		
-			//on vérifie si l'un des champ est vide 
-		    if (!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['question']) && !empty($_POST['reponse']))
-	    	{
-	     			$nom = htmlspecialchars($_POST['nom']);
-					$prenom = htmlspecialchars($_POST['prenom']);
-					$username = htmlspecialchars($_POST['username']);
-					$password = htmlspecialchars($_POST['password']);
-					$question = htmlspecialchars($_POST['question']);
-					$reponse = htmlspecialchars($_POST['reponse']);
-    				//on hache le password
-    				//$passwordhach = password_hash($password, PASSWORD_DEFAULT);
-					
+	include('connexion_bdd.php');
+	if (isset($_POST['inscription']))
+	{		
+		//on vérifie si l'un des champ est vide 
+		if (!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['question']) && !empty($_POST['reponse']))
+		{
+			$nom = htmlspecialchars($_POST['nom']);
+			$prenom = htmlspecialchars($_POST['prenom']);
+			$username = htmlspecialchars($_POST['username']);
+			$password = htmlspecialchars($_POST['password']);
+			$question = htmlspecialchars($_POST['question']);
+			$reponse = htmlspecialchars($_POST['reponse']);
+			//on hache le password
+			$passwordhach = password_hash($password, PASSWORD_DEFAULT);
 
-	     		//on teste si le username est deja présent dans la bdd
-	     		$requete = $db->prepare("SELECT * FROM account WHERE username = ?");
-	     		$requete->execute(array($username));
-	     		$usernameexist = $requete->rowcount();
+
+			//on teste si le username est deja présent dans la bdd
+			$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
+			$requete->execute(array($username));
+			$usernameexist = $requete->fetch();
      	
-    			//si le username n'existe pas on insere les données dans la base
-   				if ($usernameexist == 0)
-		   		{
-		   			
-					$requete = $db->prepare("INSERT INTO account(nom,prenom,username,password,question,reponse) VALUES	(:nom,:prenom,:username,:password,:question,:reponse)");
-					$requete->execute(array(
-						'nom' => $nom, 
-						'prenom' => $prenom,
-						'username' => $username,
-						'password' => $password,
-						'question' => $question,
-						'reponse' => $reponse
-					));
-					if (isset($requete)){
-						echo "Vous êtes bien inscrit";
-					}
+			//si le username n'existe pas on insere les données dans la base
+			if ($usernameexist == false) {		   			
+				$requete = $db->prepare('INSERT INTO account(nom,prenom,username,password,question,reponse) VALUES	(:nom,:prenom,:username,:password,:question,:reponse)');
+				$requete->execute(array(
+					'nom' => $nom, 
+					'prenom' => $prenom,
+					'username' => $username,
+					'password' => $passwordhach,
+					'question' => $question,
+					'reponse' => $reponse
+				));
+				if (isset($requete)) {
+					echo "vous êtes bien inscrit";
 				}
-				else 
-				{
-					echo "Username existe déja!";
-				}		
-	   		}
-		   	else
-	   		{
-	   			echo "Tous les champs doivent être rempli!";
-	   		}
-		}
-	 ?>
+			} else {
+				echo "le user existe deja";
+			}
+		} else {
+		echo "tous les champs doivent etre rempli";
+		}	
+	}
+?>
 <!DOCTYPE html>
 <html>
 
