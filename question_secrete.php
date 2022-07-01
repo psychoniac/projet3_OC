@@ -1,4 +1,5 @@
-<?php include('connexion_bdd.php'); ?>
+<?php include('connexion_bdd.php');
+	session_start() ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,33 +25,31 @@
 
 </body>
 </html>
-<?php if (isset($_POST['envoyer']) && !empty($_POST['username']) && !empty($_POST['question']) && !empty($_POST['reponse'])) {
+<?php 
+if (isset($_POST['envoyer'])) {  
+	if (!empty($_POST['username']) && !empty($_POST['question']) && !empty($_POST['reponse'])) {
 		$username = $_POST['username'];
 		$question = $_POST['question'];
 		$reponse = $_POST['reponse'];
+
 		//on verifie que le username du formulaire existe dans la bdd
 		$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
-		$requete->execute(array('username'));
-		$usernameexist = $requete->rowcount();
+		$requete->execute(array($username));
+		$usernameexist = $requete->fetch();
+
 		//si le username existe on va verifier que la question et la reponse du formulaire correspond a la question et la reponse de la bdd
-			if ($usernameexist == 1) {
-				//on va chercher la question et la reponse qui corresponde a username
-				$requete2 = $db->prepare('SELECT question FROM account WHERE username = $username');
-				$requete2->execute(array('username'));
-				$questionSecrete = $requete2->rowcount();
-				$requete3 = $db->prepare('SELECT reponse FROM account WHERE username = $username');
-				$requete3->execute(array('username'));
-				$reponse = $requete3->rowcount();
-				//si la question et la reponse du formulaire sont egal a la question et la reponse de la bdd 
-				if ($questionSecrete == $question AND $reponseSecrete == $reponse) {
-					header(Location: 'nouveau_password.php');
-				} else {
-					echo 'un champ est vide';
-				}
+		if ($usernameexist !== false) {
+			//si la question et la reponse du formulaire sont egal a la question et la reponse de la bdd 
+			if ($usernameexist['question'] == $question && $usernameexist['reponse'] == $reponse) {
+				header('Location: nouveau_password.php');
 			} else {
-				echo 'le username est absent dans la bdd';
+				echo 'La question ou la reponse ne correspond pas aux donnees enregistre';
 			}
 		} else {
-			'la question ou la reponse sont inexacte';
+			echo 'le username est absent de la base';
 		}
+	} else {
+		echo 'Un des champs est vide';
+	}
+}
 ?>
