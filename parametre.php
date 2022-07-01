@@ -7,7 +7,7 @@ if ( isset( $_POST[ 'changement_parametre' ] ) && isset( $_SESSION[ 'username' ]
  {
     //on verifie les champs du formulaire
     if ( !empty( $_POST[ 'nom' ] ) && !empty( $_POST[ 'prenom' ] ) && !empty( $_POST[ 'username' ] ) && !empty( $_POST[ 'password' ] ) && !empty( $_POST[ 'question' ] ) && !empty( $_POST[ 'reponse' ] ) )
- {
+    {
         $userlogged = htmlspecialchars( $_SESSION[ 'username' ] );
         $nom = htmlspecialchars( $_POST[ 'nom' ] );
         $prenom = htmlspecialchars( $_POST[ 'prenom' ] );
@@ -37,15 +37,15 @@ if ( isset( $_POST[ 'changement_parametre' ] ) && isset( $_SESSION[ 'username' ]
 			if (isset($requete2)){
 				echo "vos changements sont bien enregistré";
 			}
-		}
+		
 		else{
 			echo "le username existe déjà";
-		} 
-	else
+		}}
+		else
 	{
-		echo "Tous les champs doivent être rempli";
-	}	
- 	}		
+			echo "tous les champs doivent être rempli";
+		}
+}			
 } 
 ?>
 
@@ -62,22 +62,22 @@ if ( isset( $_POST[ 'changement_parametre' ] ) && isset( $_SESSION[ 'username' ]
 	<h1>Modifier mes informations</h1>
 	<form method=post action="parametre.php">
 		<label for="nom">Nom</label>
-		<input type="text' name = 'nom' id = 'nom">
+		<input type="text" name="nom" id="nom">
 		<label for="prénom">Prénom</label>
-		<input type="text' name = 'prénom">
+		<input type="text" name="prénom">
 		<label for="username">Username</label>
-		<input type="text' name = 'username">
+		<input type="text" name="username">
 		<Label for="password">Password</label>
-		<input type="password' name = 'password">
+		<input type="password" name="password">
 		<label for="question">Question</label>
-		<select name="question' id = 'question">
+		<select name="question" id="question">
 			<option value="Quel est le nom de votre premier animal de compagnie?">Quel est le nom de votre premier animal de compagnie?</option>
 			<option value="Quel est le prénom de votre mère?">Quel est le prénom de votre mère?</option>
 			<option value="Quel est votre sport favori?">Quel est votre sport favori?</option>
 </select>
 <label for="reponse">Réponse</label>
-<input type="text' name = 'reponse' id = 'reponse">
-<input type="submit' namme = 'changement_parametre">
+<input type="text" name ="reponse" id ="reponse">
+<input type="submit" namme="changement_parametre">
         </form>
         </body>
         </html>
