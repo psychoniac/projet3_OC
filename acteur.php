@@ -3,10 +3,7 @@
  if (isset($_SESSION)) {
     echo $_SESSION['nom'];
     echo $_SESSION['prenom'];    
-}
-
-
-
+} else header('Location: login.php')
 ?>
 
 <!DOCTYPE html>
