@@ -11,13 +11,15 @@ if (isset($_SESSION)) {
 <head>
 <meta charset = 'utf-8' />
 <link rel = 'stylesheet' href = 'style.css'>
-<title>Projet 3 openclassroom</title>
+<title>Projet 3</title>
 </head>
 
 <body>
-<?php include( 'en_tete.php' );
-?>
-<section class = 'presentation'>
+<header>
+<?php include( 'en_tete.php' );?>
+</header>
+
+<div class = 'presentation'>
 <h1>GBAF</h1>
 <h3>Présentation de GBAF</h3>
 <p>
@@ -26,10 +28,9 @@ Aujourd’hui, il n’existe pas de base de données pour chercher ces informati
 Pour remédier à cela, le GBAF souhaite proposer aux salariés des grands groupes français un point d’entrée unique, répertoriant un grand nombre d’informations sur les partenaires et acteurs du groupe ainsi que sur les produits et services bancaires et financiers.
 Chaque salarié pourra ainsi poster un commentaire et donner son avis.
 </p>
-</section>
+</div>
 
 <section class = 'partenaire'>
-
 <h3>Les partenaires</h3>
 <div class = 'acteur'>
 <?php
@@ -40,7 +41,6 @@ $listeActeurs = $requete->fetchAll();
 foreach ( $listeActeurs as $acteur )
 {
     ?>
-    <div class = 'bloc_acteur'>
     <img class = 'logo' src = "img/<?php echo $acteur['logo']; ?>">
     <p><div class = 'nom_acteur'><?php echo $acteur[ 'acteur' ];
     ?></div></p>
@@ -48,17 +48,17 @@ foreach ( $listeActeurs as $acteur )
     <?php
     $description = substr( $acteur[ 'description' ], 0, 100 ).'...';
     echo $description;
-
     ?>
     <a href = "acteur.php?id=<?php echo $acteur['id_acteur'];?> & nom=<?php echo $acteur['acteur'];?>">Lire la suite</a> </div></p>
-    </div>
+   
     <?php
 }
 ?>
 </div>
-<a href = "deconnexion.php">Se déconnecter</a>
 </section>
-<?php include( 'footer.php' );
-?>
+<a name="deconnexion" href = "deconnexion.php">Se déconnecter</a>
+<footer>
+<?php include( 'footer.php' );?>
+</footer>
 </body>
 </html>
