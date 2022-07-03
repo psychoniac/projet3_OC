@@ -28,27 +28,19 @@
     } else {
         header('Location: login.php');}
 }
-
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset = 'utf-8' />
 <link rel = 'stylesheet' href = 'style.css'>
-<title>Acteur</title>
+<title>Projet 3</title>
 </head>
-
 <body>
-<?php include( 'en_tete.php' );
-?>
-
-<h2>Les partenaires</h2>
+<?php include( 'en_tete.php' );?>
+<div name="bloc_acteur">
+<h1>Les partenaires</h1>
 <?php if (isset($_GET[ 'id' ])) {
     $requeteSQL = 'SELECT * FROM acteur WHERE id_acteur = :id';
     $requete = $db->prepare( $requeteSQL );
@@ -65,22 +57,24 @@
         <div class = 'description'>
         <?php echo $acteur[ 'description' ]; ?>
         </div>
-        
+        <div name="lien_likeDislike">
         <a href = 'like_dislike.php?vote=1&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['username']; ?>' >Like</a>
         <a href = 'like_dislike.php?vote=0&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['username']; ?>' >Dislike</a>
-        
+        </div>
+
+<div name="formulaire_commentaire">
 <?php //parti commentaire
 echo $_SESSION[ 'nom' ];
 echo 'peut poster un commentaire'; ?>
-
 <form method = 'post' action = 'acteur.php'>
 <textarea name = 'commentaire' name = 'commentaire' rows = '5' cols = '250'></textarea>
 <input type = 'submit' name = 'envoyer'>
 </form>
-
-
+</div>
 <?php } } ?>
-
+</div>
+<footer>
+<?php include('footer.php'); ?>
+</footer>
 </body>
-
 </html>
