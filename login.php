@@ -20,6 +20,9 @@ if (isset($_POST['envoyer'])) {
 			//on verifie le password
 			//if ($usernameExist['password'] == $passwordhach) {
 			if ($usernameExist['password'] == $password) {
+				$_SESSION['nom'] = $usernameExist['nom'];
+				$_SESSION['prenom'] = $usernameExist['prenom'];
+				$_SESSION['id'] = $usernameExist['id_user'];
 				header('Location: home.php');
 			} else {
 			echo "le password n'est pas le bon ";
