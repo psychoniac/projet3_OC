@@ -8,25 +8,26 @@ if (isset($_POST['envoyer'])) {
 	if (!empty($_POST['identifiant']) && !empty($_POST['password'])) {
 	//on fait en sorte que les champs ne puisse pas contenir de code html
 	$username = htmlspecialchars($_POST['identifiant']);
-	//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 	$password = htmlspecialchars($_POST['password']);
+	$passwordhach = password_hash($password, PASSWORD_DEFAULT);
+	
 	//on va faire une requete pour savoir si le username est présent dans la base
 	$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
 	$requete->execute(array($username));
 	$usernameExist = $requete->fetch();
-	//si le username existe 
-		if ($usernameExist !== false) {
-			//on va verifier si le password présent dans usernameExist correspond au password du formulaire
-			if ($usernameExist['password'] == $password) {
-				$_SESSION['nom'] = $usernameExist['nom'];
-				$_SESSION['prenom'] = $usernameExist['prenom'];
-				header ('Location: home.php');
-			} else {
-			echo "le password n'est pas le bon !!";
-			}
+		//si le password existe
+		if ($usernameExist['password'] !== false) {
+			//on verifie le password 
+			password_verify($passwordhach,$usernameExist['password']);
 		} else {
-		echo "le username n'est pas le bon";
-		}
+			echo "le password n'est pas le bon";
+		} 
+		//si le username existe 
+		if ($usernameExist['username'] !== false) {
+			header('Location: home.php');
+		} else {
+			echo "le username n'est pas le bon ";
+		} 
 	} else {
 		echo "remplir tous les champs du formulaire";
 	}
