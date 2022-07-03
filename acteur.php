@@ -1,5 +1,12 @@
 <?php session_start();
  include( 'connexion_bdd.php' );
+ if (isset($_SESSION)) {
+    echo $_SESSION['nom'];
+    echo $_SESSION['prenom'];    
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
