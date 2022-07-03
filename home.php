@@ -1,6 +1,8 @@
-<?php
+<?php session_start();
 include( 'connexion_bdd.php' );
-session_start();
+if (isset($_SESSION['username'])) {
+    echo $_SESSION['username'];    
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,6 +54,7 @@ foreach ( $listeActeurs as $acteur )
 }
 ?>
 </div>
+<a href = "deconnexion.php">Se déconnecter</a>
 </section>
 <?php include( 'footer.php' );
 ?>
