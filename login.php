@@ -1,33 +1,26 @@
 <?php 
-		session_start(); 
+session_start(); 
 		
-		include('connexion_bdd.php'); 
-		
-		if (!empty($_POST['identifiant']) && !empty($_POST['password'])) {
-			//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-			$password = $_POST['password'];
-			$requeteSQL = "SELECT * FROM account WHERE username = :username and password = :password";
-			$requete = $db->prepare($requeteSQL);
-			$requete->execute([
-				'username' => $_POST['identifiant'],
-				'password' => $password,
-			]);
-			$resultat = $requete->fetch();
-			
-			if ($resultat) { 
-				$_SESSION['username'] = $resultat['username'];
-				header("Location: home.php",true,301);
-			//exit();}
-
-				
-			}
-
-			if (!$resultat) {
-				echo "mot de passe ou username invalide";		
-		    } else {
-				echo "vous êtes connecté!!";
-			}
-		}
+include('connexion_bdd.php'); 
+if (isset($_POST['envoyer'])) {
+	if (!empty($_POST['identifiant']) && !empty($_POST['password'])) {
+	$username = $_POST['identifiant'];
+	//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+	$password = $_POST['password'];
+	$requeteSQL = ('SELECT * FROM account WHERE username = ? and password = ?');
+	$requete = $db->prepare($requeteSQL);
+	$requete->execute(array($username,$password));
+	$resultat = $requete->fetch();
+		if ($resultat) { 
+		$_SESSION['username'] = $resultat['username'];
+		header("Location: home.php",true,301);
+		} else {
+			echo "mot de passe ou username invalide";		
+		} 
+	} else {
+		echo "un des champs est vide";
+	}
+}
 ?>
 
 <!DOCTYPE html>
