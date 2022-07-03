@@ -10,16 +10,18 @@ if (isset($_POST['envoyer'])) {
 	$username = htmlspecialchars($_POST['identifiant']);
 	$password = htmlspecialchars($_POST['password']);
 	//$passwordhach = password_hash($password, PASSWORD_DEFAULT);
+	//var_dump($passwordhach);
 	
 	//on va faire une requete pour savoir si le username est présent dans la base
 	$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
 	$requete->execute(array($username));
 	$usernameExist = $requete->fetch();
+	//var_dump($usernameExist['password']);
 		//si le username existe 
 		if ($usernameExist !== false) {
 			//on verifie le password
-			//if ($usernameExist['password'] == $passwordhach) {
 			if ($usernameExist['password'] == $password) {
+			//if ($usernameExist['password'] == $password) {
 				$_SESSION['nom'] = $usernameExist['nom'];
 				$_SESSION['prenom'] = $usernameExist['prenom'];
 				$_SESSION['id'] = $usernameExist['id_user'];
