@@ -1,5 +1,10 @@
-<?php session_start() ; 
-    if (isset($_POST['deconnexion'])) {
+<?php if (!isset($_SESSION['id'])) {
+    header('Location: login.php'); }
+    else {
+        session_start();
+    }?>
+
+<?php    if (isset($_POST['deconnexion'])) {
         session_destroy();
     }
 ?>
