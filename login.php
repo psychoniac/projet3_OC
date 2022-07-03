@@ -2,23 +2,33 @@
 session_start(); 
 		
 include('connexion_bdd.php'); 
+//on verifie que la variable $_POST['envoyer'] est bien definie 
 if (isset($_POST['envoyer'])) {
+	//on verifie que les champs du formulaire ne sont pas vide 
 	if (!empty($_POST['identifiant']) && !empty($_POST['password'])) {
-	$username = $_POST['identifiant'];
+	//on fait en sorte que les champs ne puisse pas contenir de code html
+	$username = htmlspecialchars($_POST['identifiant']);
 	//$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-	$password = $_POST['password'];
-	$requeteSQL = ('SELECT * FROM account WHERE username = ? and password = ?');
-	$requete = $db->prepare($requeteSQL);
-	$requete->execute(array($username,$password));
-	$resultat = $requete->fetch();
-		if ($resultat) { 
-		$_SESSION['username'] = $resultat['username'];
-		header("Location: home.php",true,301);
+	$password = htmlspecialchars($_POST['password']);
+	//on va faire une requete pour savoir si le username est présent dans la base
+	$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
+	$requete->execute(array($username));
+	$usernameExist = $requete->fetch();
+	//si le username existe 
+		if ($usernameExist !== false) {
+			//on va verifier si le password présent dans usernameExist correspond au password du formulaire
+			if ($usernameExist['password'] == $password) {
+				$_SESSION['nom'] = $usernameExist['nom'];
+				$_SESSION['prenom'] = $usernameExist['prenom'];
+				header ('Location: home.php');
+			} else {
+			echo "le password n'est pas le bon !!";
+			}
 		} else {
-			echo "mot de passe ou username invalide";		
-		} 
+		echo "le username n'est pas le bon";
+		}
 	} else {
-		echo "un des champs est vide";
+		echo "remplir tous les champs du formulaire";
 	}
 }
 ?>
