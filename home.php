@@ -2,7 +2,8 @@
 include( 'connexion_bdd.php' );
 if (isset($_SESSION)) {
     echo $_SESSION['nom'];
-    echo $_SESSION['prenom'];    
+    echo $_SESSION['prenom']; 
+    echo $_SESSION['id'];   
 }
 ?>
 <!DOCTYPE html>
