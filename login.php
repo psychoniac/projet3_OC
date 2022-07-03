@@ -15,23 +15,21 @@ if (isset($_POST['envoyer'])) {
 	$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
 	$requete->execute(array($username));
 	$usernameExist = $requete->fetch();
-		//si le password existe
-		if ($usernameExist['password'] !== false) {
-			//on verifie le password 
-			password_verify($passwordhach,$usernameExist['password']);
-		} else {
-			echo "le password n'est pas le bon";
-		} 
 		//si le username existe 
-		if ($usernameExist['username'] !== false) {
-			header('Location: home.php');
-		} else {
-			echo "le username n'est pas le bon ";
-		} 
+		if ($usernameExist !== false) {
+			//on verifie le password
+			if ($usernameExist['password'] == $passwordhach) {
+				header('Location: home.php');
+			} else {
+			echo "le password n'est pas le bon ";
+		}} else {
+		echo "le username n'est pas le bon";
+		}
 	} else {
-		echo "remplir tous les champs du formulaire";
+	echo "tous les champs doivent etre rempli";	
 	}
-}
+	}
+
 ?>
 
 <!DOCTYPE html>
