@@ -1,5 +1,18 @@
 <?php 
 	include('connexion_bdd.php');
+	session_start();
+if (isset($_SESSION)) {
+    echo $_SESSION['nom'];
+    echo $_SESSION['prenom'];    
+}
+?>
+
+
+
+
+
+
+
 	//on va traiter le formulaire ici
 	//on check qu'aucun utilisateur est connecté, on check les variables du formulaire
 	if (!isset($_SESSION['id']) && !empty($_POST['changer_password']) && !empty($_POST['nouveau_password']) && !empty($_POST['confirm_password'])){
