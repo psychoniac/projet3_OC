@@ -9,7 +9,7 @@ if (isset($_POST['envoyer'])) {
 	//on fait en sorte que les champs ne puisse pas contenir de code html
 	$username = htmlspecialchars($_POST['identifiant']);
 	$password = htmlspecialchars($_POST['password']);
-	$passwordhach = password_hash($password, PASSWORD_DEFAULT);
+	//$passwordhach = password_hash($password, PASSWORD_DEFAULT);
 	
 	//on va faire une requete pour savoir si le username est présent dans la base
 	$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
@@ -18,7 +18,8 @@ if (isset($_POST['envoyer'])) {
 		//si le username existe 
 		if ($usernameExist !== false) {
 			//on verifie le password
-			if ($usernameExist['password'] == $passwordhach) {
+			//if ($usernameExist['password'] == $passwordhach) {
+			if ($usernameExist['password'] == $password) {
 				header('Location: home.php');
 			} else {
 			echo "le password n'est pas le bon ";
