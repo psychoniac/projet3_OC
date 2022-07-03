@@ -3,8 +3,9 @@
  if (isset($_SESSION)) {
         echo $_SESSION['nom'];
         echo $_SESSION['prenom'];  
-        echo $_SESSION['id'];   
-    //on verifie sont bien defini
+        echo $_SESSION['id'];  ?>
+
+<?php    //on verifie sont bien defini
     if (!empty($_SESSION['id'])) {
         if (!empty($_GET['id'])) {
         //on renomme les variables 
@@ -38,8 +39,10 @@
 <title>Projet 3</title>
 </head>
 <body>
+<header>
 <?php include( 'en_tete.php' );?>
-<div name="bloc_acteur">
+</header>
+<section name="bloc_acteur">
 <h1>Les partenaires</h1>
 <?php if (isset($_GET[ 'id' ])) {
     $requeteSQL = 'SELECT * FROM acteur WHERE id_acteur = :id';
@@ -72,7 +75,7 @@ echo 'peut poster un commentaire'; ?>
 </form>
 </div>
 <?php } } ?>
-</div>
+</section>
 <footer>
 <?php include('footer.php'); ?>
 </footer>
