@@ -1,8 +1,9 @@
 <?php session_start();
-
-include( 'en_tete.php' );
-
 include( 'connexion_bdd.php' );
+if (isset($_SESSION)) {
+    echo $_SESSION['nom'];
+    echo $_SESSION['prenom'];    
+}
 if ( isset( $_POST[ 'changement_parametre' ] ) && isset( $_SESSION[ 'username' ] ) )
  {
     //on verifie les champs du formulaire
