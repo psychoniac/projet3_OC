@@ -2,40 +2,34 @@
  include( 'connexion_bdd.php' );
  if (isset($_SESSION)) {
         echo $_SESSION['nom'];
-        echo $_SESSION['prenom'];  
-        echo $_SESSION['id'];
-         }  ?>
-<?php     
-    //on verifie qu'un user est bien connecter et qu'un acteur a ete selectionner 
-    if (isset($_SESSION['id'])) {
-        if (isset($_POST['envoyer'])) {
-            if (isset($_GET['id'])) {
-            $id_user = htmlspecialchars($_SESSION['id']);
-            $id_acteur = htmlspecialchars($_GET['id']);
+        echo $_SESSION['prenom']; 
+        echo "vous êtes bien connecté."; 
+         } else {
+            header('Location: login.php');
+         }  
+//on se place dans le formulaire 
+if (isset($_POST['envoyer'])) {
+    //on verifie la selection d'un acteur
+    if (isset($_GET['id'])) {
+        $id_user = htmlspecialchars($_SESSION['id']);
+        $id_acteur = htmlspecialchars($_GET['id']);
             
-                //on verifie que le commentaire n'est pas vide 
-                if (!empty($_POST['commentaire'])) {
-                //on renomme les variables 
-                $id_user = $_SESSION['id'];
-                //on nomme les variables que l'on va utiliser
-                $commentaire = $_POST['commentaire'];
-                //on effectue la requete qui va inserer le commentaire
-                $requete = $db->prepare('INSERT INTO post(id_user,id_acteur,post) VALUES (:id_user,:id_acteur,:post)');
-                $requete->execute(array(
+        //on verifie que le commentaire n'est pas vide 
+        if (!empty($_POST['commentaire'])) {
+            //on renomme les variables 
+            $commentaire = $_POST['commentaire'];
+            //on effectue la requete qui va inserer le commentaire
+            $requete = $db->prepare('INSERT INTO post(id_user,id_acteur,post) VALUES (:id_user,:id_acteur,:post)');
+            $requete->execute(array(
                 'id_user' => $id_user,
                 'id_acteur' => $id_acteur,
                 'post' => $commentaire));
-                } else {
-                    echo "tous les champs doivent etre rempli";}
+        } else {
+                echo "tous les champs doivent etre rempli";}
                 
-            } else {
-            echo "l'acteur n'a pas ete choisi";}
-                
-        }    
     } else {
-        echo "aucun user connecté";
-    }
-    
+            echo "l'acteur n'a pas ete choisi";}            
+}    
 ?>
 
 <!DOCTYPE html>
@@ -71,16 +65,21 @@
         <a href = 'like_dislike.php?vote=1&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['id']; ?>' >Like</a>
         <a href = 'like_dislike.php?vote=0&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['id']; ?>' >Dislike</a>
         </div>
+
 <div class="affichage des commentaires">
 <?php //partie affichage des commentaires
 //on verifie qu'un id_acteur est bien defini
-if (isset($_GET['id'])) {
-    $reqSql = 'SELECT acteur.id_acteur,post.id_acteur FROM acteur INNER JOIN post ON id_acteur = post.acteur_id';
-    $requete = $db->prepare($reqSql);
-    $listePost = $requete->execute(['id_acteur' => $_GET['id']]);
-    $Post = $listePost->fetch();
-    var_dump($Post);
-}
+//if (isset($_GET['id'])) {
+  //  $reqSql = 'SELECT acteur.id_acteur,post.id_acteur FROM acteur INNER JOIN post ON id_acteur = post.acteur_id';
+    //$requete = $db->prepare($reqSql);
+    //$listePost = $requete->execute(['id_acteur' => $_GET['id']]);
+    // = $listePost->fetch();
+   // var_dump($Post);
+   // if (!empty($Post)) {
+
+
+//    }
+//}
 
 ?>
 </div>
