@@ -3,15 +3,16 @@
  if (isset($_SESSION)) {
         echo $_SESSION['nom'];
         echo $_SESSION['prenom'];  
-        echo $_SESSION['id']; }  ?>
+        echo $_SESSION['id'];
+         }  ?>
 <?php     
     //on verifie qu'un user est bien connecter et qu'un acteur a ete selectionner 
     if (isset($_SESSION['id'])) {
-        if (!empty($_GET['id'])) {
-        $id_user = htmlspecialchars($_SESSION['id']);
-        $id_acteur = htmlspecialchars($_GET['id']);
-            //on verifie que l'on a clique sur envoyer
-            if (isset($_POST['envoyer'])) {
+        if (isset($_POST['envoyer'])) {
+            if (isset($_GET['id'])) {
+            $id_user = htmlspecialchars($_SESSION['id']);
+            $id_acteur = htmlspecialchars($_GET['id']);
+            
                 //on verifie que le commentaire n'est pas vide 
                 if (!empty($_POST['commentaire'])) {
                 //on renomme les variables 
@@ -26,9 +27,11 @@
                 'post' => $commentaire));
                 } else {
                     echo "tous les champs doivent etre rempli";}
-            }    
-        } else {
+                
+            } else {
             echo "l'acteur n'a pas ete choisi";}
+                
+        }    
     } else {
         echo "aucun user connecté";
     }
@@ -65,8 +68,8 @@
         <?php echo $acteur[ 'description' ]; ?>
         </div>
         <div name="lien_likeDislike">
-        <a href = 'like_dislike.php?vote=1&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['username']; ?>' >Like</a>
-        <a href = 'like_dislike.php?vote=0&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['username']; ?>' >Dislike</a>
+        <a href = 'like_dislike.php?vote=1&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['id']; ?>' >Like</a>
+        <a href = 'like_dislike.php?vote=0&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['id']; ?>' >Dislike</a>
         </div>
 
 <div name="formulaire_commentaire">
