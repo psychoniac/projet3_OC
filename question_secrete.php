@@ -33,9 +33,9 @@
 <?php 
 if (isset($_POST['envoyer'])) {  
 	if (!empty($_POST['username']) && !empty($_POST['question']) && !empty($_POST['reponse'])) {
-		$username = $_POST['username'];
-		$question = $_POST['question'];
-		$reponse = $_POST['reponse'];
+		$username = htmlspecialchars($_POST['username']);
+		$question = htmlspecialchars($_POST['question']);
+		$reponse =  htmlspecialchars($_POST['reponse']);
 
 		//on verifie que le username du formulaire existe dans la bdd
 		$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
