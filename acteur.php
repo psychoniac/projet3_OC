@@ -52,11 +52,11 @@
 <section name="bloc_acteur">
 <h1>Les partenaires</h1>
 <?php if (isset($_GET[ 'id' ])) {
-    $requeteSQL = 'SELECT * FROM acteur WHERE id_acteur = :id';
-    $requete = $db->prepare( $requeteSQL );
-    $acteurselect = $requete->execute( [ 'id' => $_GET[ 'id' ] ] );
-    $acteur = $requete->fetch();
-        if (!empty($acteur)) { ?>
+        $requeteSQL = 'SELECT * FROM acteur WHERE id_acteur = :id';
+        $requete = $db->prepare( $requeteSQL );
+        $acteurList = $requete->execute( [ 'id' => $_GET[ 'id' ] ] );
+        $acteur = $requete->fetch();
+            if (!empty($acteur)) { ?>
 
         <img class = 'logo_acteur' src = "img/<?php echo $acteur['logo']; ?>"></br>
 
@@ -71,7 +71,19 @@
         <a href = 'like_dislike.php?vote=1&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['id']; ?>' >Like</a>
         <a href = 'like_dislike.php?vote=0&acteurId=<?php echo $_GET['id']; ?>&user=<?php echo $_SESSION['id']; ?>' >Dislike</a>
         </div>
+<div class="affichage des commentaires">
+<?php //partie affichage des commentaires
+//on verifie qu'un id_acteur est bien defini
+if (isset($_GET['id'])) {
+    $reqSql = 'SELECT acteur.id_acteur,post.id_acteur FROM acteur INNER JOIN post ON id_acteur = post.acteur_id';
+    $requete = $db->prepare($reqSql);
+    $listePost = $requete->execute(['id_acteur' => $_GET['id']]);
+    $Post = $listePost->fetch();
+    var_dump($Post);
+}
 
+?>
+</div>
 <div name="formulaire_commentaire">
 <?php //parti commentaire
 echo $_SESSION[ 'nom' ];
