@@ -10,8 +10,8 @@ if (isset($_POST['envoyer'])) {
 	$username = htmlspecialchars($_POST['identifiant']);
 	$password = htmlspecialchars($_POST['password']);
 	//$passwordhach = password_hash($password, PASSWORD_DEFAULT);
-	//var_dump($passwordhach);
-	
+	//var_dump($password);
+	//$passwordTest = password_verify($passwordhach,$usernameExist['password']);
 	//on va faire une requete pour savoir si le username est présent dans la base
 	$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
 	$requete->execute(array($username));
@@ -20,22 +20,21 @@ if (isset($_POST['envoyer'])) {
 		//si le username existe 
 		if ($usernameExist !== false) {
 			//on verifie le password
-			if ($usernameExist['password'] == $password) {
-			//if ($usernameExist['password'] == $password) {
+			if ($usernameExist['password'] == $password) { 
 				$_SESSION['nom'] = $usernameExist['nom'];
 				$_SESSION['prenom'] = $usernameExist['prenom'];
 				$_SESSION['id'] = $usernameExist['id_user'];
-				header('Location: home.php');
+				header("Location: home.php");
 			} else {
-			echo "le password n'est pas le bon ";
-		}} else {
-		echo "le username n'est pas le bon";
+				echo "le password n'est pas bon";
+			}
+		} else {
+			echo "le username n'est pas bon";
 		}
 	} else {
-	echo "tous les champs doivent etre rempli";	
+		echo "tous les champs doivent etre rempli";	
+		}
 	}
-	}
-
 ?>
 
 <!DOCTYPE html>
