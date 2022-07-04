@@ -5,31 +5,34 @@
         echo $_SESSION['prenom'];  
         echo $_SESSION['id']; }  ?>
 <?php     
-    //on verifie qu'un user est bien connecter 
+    //on verifie qu'un user est bien connecter et qu'un acteur a ete selectionner 
     if (isset($_SESSION['id'])) {
-        //on vérifie que l'id de l'acteur est présent dans l'url
-        if (!empty($_GET['id'])) { 
-            if (!isset($_POST['envoyer']) && (!empty($_POST['commentaire']))) {
-            //on renomme les variables 
-            $id_user = $_SESSION['id'];
-            $id_acteur = $_GET['id'];
-            //on nomme les variables que l'on va utiliser
-            $commentaire = $_POST['commentaire'];
-            $requete = $db->prepare('INSERT INTO post(id_post,id_user,id_acteur,date_add,post) VALUES (:id_post,:id_user,:id_acteur,:date_add,:post)');
-            $requete->execute(array(
-                'id_post' => null,
+        if (!empty($_GET['id'])) {
+        $id_user = htmlspecialchars($_SESSION['id']);
+        $id_acteur = htmlspecialchars($_GET['id']);
+            //on verifie que l'on a clique sur envoyer
+            if (isset($_POST['envoyer'])) {
+                //on verifie que le commentaire n'est pas vide 
+                if (!empty($_POST['commentaire'])) {
+                //on renomme les variables 
+                $id_user = $_SESSION['id'];
+                //on nomme les variables que l'on va utiliser
+                $commentaire = $_POST['commentaire'];
+                //on effectue la requete qui va inserer le commentaire
+                $requete = $db->prepare('INSERT INTO post(id_user,id_acteur,post) VALUES (:id_user,:id_acteur,:post)');
+                $requete->execute(array(
                 'id_user' => $id_user,
                 'id_acteur' => $id_acteur,
-                'date_add' => null,
                 'post' => $commentaire));
-            } else {
+                } else {
                     echo "tous les champs doivent etre rempli";}
-            
+            }    
         } else {
             echo "l'acteur n'a pas ete choisi";}
     } else {
-        echo "pas d'user connecter";
+        echo "aucun user connecté";
     }
+    
 ?>
 
 <!DOCTYPE html>
