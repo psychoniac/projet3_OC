@@ -73,11 +73,21 @@ if (isset($_POST['envoyer'])) {
 <div class="affichage des commentaires">
 <?php //partie affichage des commentaires
 //on verifie qu'un id_acteur est bien defini
-//if (isset($_GET['id'])) {
-  //  $reqSql = 'SELECT acteur.id_acteur,post.id_acteur FROM acteur INNER JOIN post ON id_acteur = post.acteur_id';
-    //$requete = $db->prepare($reqSql);
-    //$listePost = $requete->execute(['id_acteur' => $_GET['id']]);
-    // = $listePost->fetch();
+    //if (isset($_GET['id'])) {
+    $reqSql = 'SELECT p.post, p.date_add, a.acteur, ac.username  FROM post p INNER JOIN acteur a ON a.id_acteur = p.id_acteur INNER JOIN account ac ON ac.id_user = p.id_user WHERE p.id_acteur = :id_acteur';
+    $requete = $db->prepare($reqSql);
+    $requete->execute(['id_acteur' => $_GET['id']]);
+    $listePost = $requete->fetchAll();
+    foreach ($listePost as $post) 
+    {
+        $date = new \DateTime($post['date_add']);
+        $date = $date->format('d/m/Y H\hi');
+        echo $date;
+        echo $post['acteur'];
+        echo $post['username'];
+    }
+
+    
    // var_dump($Post);
    // if (!empty($Post)) {
 
@@ -85,7 +95,7 @@ if (isset($_POST['envoyer'])) {
 //    }
 //}
 
-?>
+   }}?>
 </div>
 
 <div name="formulaire_commentaire">
@@ -97,10 +107,6 @@ echo 'peut poster un commentaire'; ?>
 <input type = 'submit' name = 'envoyer'>
 </form>
 </div>
-
-<?php } else {
-    header('Location: home.php');
-} } ?>
 
 </section>
 <footer>
