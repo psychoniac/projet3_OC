@@ -12,7 +12,7 @@
 			$question = htmlspecialchars($_POST['question']);
 			$reponse = htmlspecialchars($_POST['reponse']);
 			//on hache le password
-			//$passwordhach = password_hash($password, PASSWORD_DEFAULT);
+			$passwordhach = password_hash($password, PASSWORD_DEFAULT);
 
 
 			//on teste si le username est deja présent dans la bdd
@@ -27,7 +27,7 @@
 					'nom' => $nom, 
 					'prenom' => $prenom,
 					'username' => $username,
-					'password' => $password,//hach,
+					'password' => $passwordhach,
 					'question' => $question,
 					'reponse' => $reponse
 				));
