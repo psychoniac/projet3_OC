@@ -1,6 +1,6 @@
 <?php session_start();
 include( 'connexion_bdd.php' );
-if (isset($_SESSION)) {
+if (!empty($_SESSION)) {
     echo $_SESSION['nom'];
     echo $_SESSION['prenom']; 
     echo $_SESSION['id'];   
