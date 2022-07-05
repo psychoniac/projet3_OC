@@ -1,8 +1,39 @@
 <?php include('connexion_bdd.php');
 	session_start();
-	if (isset($_SESSION)) {
-		echo $_SESSION['nom'];
-		echo $_SESSION['prenom'];    
+if (!isset($_SESSION['nom'])) {  
+	header('Location: login.php'); 
+} else {
+	echo $_SESSION['nom'];
+	echo $_SESSION['prenom']; 
+}
+//si on clique sur le bouton envoyer du formulaire
+if (isset($_POST['envoyer'])) {  
+	//on verifie que les champs du formulaire ne sont pas vide
+	if (!empty($_POST['username']) && !empty($_POST['question']) && !empty($_POST['reponse'])) {
+		//on change le nom des variables pour quue l'on ne puisse pas rentrer du code dans les champs du formulaire	
+		$username = htmlspecialchars($_POST['username']);
+		$question = htmlspecialchars($_POST['question']);
+		$reponse =  htmlspecialchars($_POST['reponse']);
+	
+		//on verifie que le username du formulaire existe dans la bdd
+		$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
+		$requete->execute(array($username));
+		$usernameexist = $requete->fetch();
+	
+		//si le username existe on va verifier que la question et la reponse du formulaire correspond a la question et la reponse de la bdd
+		if ($usernameexist !== false) {
+			//si la question et la reponse du formulaire sont egal a la question et la reponse de la bdd 
+			if ($usernameexist['question'] == $question && $usernameexist['reponse'] == $reponse) {
+				header('Location: nouveau_password.php');
+			} else {
+				echo 'La question ou la reponse ne correspond pas aux donnees enregistre';
+			}
+		} else {
+			echo 'le username est absent de la base';
+		}
+	} else {
+		echo 'Un des champs est vide';
+	}
 	}
 	?>
 <!DOCTYPE html>
@@ -30,31 +61,4 @@
 
 </body>
 </html>
-<?php 
-if (isset($_POST['envoyer'])) {  
-	if (!empty($_POST['username']) && !empty($_POST['question']) && !empty($_POST['reponse'])) {
-		$username = htmlspecialchars($_POST['username']);
-		$question = htmlspecialchars($_POST['question']);
-		$reponse =  htmlspecialchars($_POST['reponse']);
 
-		//on verifie que le username du formulaire existe dans la bdd
-		$requete = $db->prepare('SELECT * FROM account WHERE username = ?');
-		$requete->execute(array($username));
-		$usernameexist = $requete->fetch();
-
-		//si le username existe on va verifier que la question et la reponse du formulaire correspond a la question et la reponse de la bdd
-		if ($usernameexist !== false) {
-			//si la question et la reponse du formulaire sont egal a la question et la reponse de la bdd 
-			if ($usernameexist['question'] == $question && $usernameexist['reponse'] == $reponse) {
-				header('Location: nouveau_password.php');
-			} else {
-				echo 'La question ou la reponse ne correspond pas aux donnees enregistre';
-			}
-		} else {
-			echo 'le username est absent de la base';
-		}
-	} else {
-		echo 'Un des champs est vide';
-	}
-}
-?>
