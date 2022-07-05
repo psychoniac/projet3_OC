@@ -16,7 +16,8 @@ if (!empty($_SESSION)) {
 			$password2 = htmlspecialchars($_POST['confirm_password']);
 			$userConnect = htmlspecialchars($_SESSION['id']);
 			if ($password1 == $password2) {
-				$requete = $db->prepare("UPDATE account SET 'password' = '$password2' WHERE 'user_id' = '$userConnect'");
+				$passwordhach = password_hash($password1, PASSWORD_DEFAULT); 
+				$requete = $db->prepare("UPDATE account SET 'password' = '$passwordhach' WHERE 'user_id' = '$userConnect'");
 				$new_password = $requete->execute();
 				echo "votre password a bien ete mis à jour";
 			} else {
