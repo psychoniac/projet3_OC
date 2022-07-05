@@ -4,6 +4,11 @@ body
 	
 
 }
+header{
+	min-width: 100%;
+	border-bottom: 1px solid black;
+	padding-bottom: 5px;
+}
 
 .container
 {
@@ -25,4 +30,22 @@ body
 }
 .login{
 
+}
+h3
+{
+	padding-bottom: 20px;
+	text-align: left;
+}
+.partenaire
+{
+	width: 80%;
+}
+.description
+{
+	padding-bottom: 10px;
+}
+.logo
+{
+	display: block;
+	float: left;
 }
