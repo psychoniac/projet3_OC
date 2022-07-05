@@ -1,7 +1,7 @@
 <?php 
 	include('connexion_bdd.php');
 	session_start();
-if (isset($_SESSION)) {
+if (!empty($_SESSION)) {
     echo $_SESSION['nom'];
     echo $_SESSION['prenom'];    
 } else {
