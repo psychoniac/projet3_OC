@@ -17,7 +17,7 @@ if (isset($_POST['envoyer'])) {
         //on verifie que le commentaire n'est pas vide 
             if (!empty($_POST['commentaire'])) {
             //on renomme les variables 
-            $commentaire = $_POST['commentaire'];
+            $commentaire = htmlspecialchars($_POST['commentaire']);
             //on effectue la requete qui va inserer le commentaire
             $requete = $db->prepare('INSERT INTO post(id_user,id_acteur,post) VALUES (:id_user,:id_acteur,:post)');
             $requete->execute(array(
@@ -45,11 +45,11 @@ if (isset($_POST['envoyer'])) {
 </head>
 <body>
 <header>
-<?php include( 'en_tete.php' );?>
+<img class="logo_gbaf" src="img/logo.png" alt="logo couleur de la société" width="160" height="160" title="logo de l'entreprise">
 </header>
 <section name="bloc_acteur">
 <h1>Les partenaires</h1>
-<?php if (isset($_GET[ 'id' ])) {
+<?php if (!empty($_GET[ 'id' ])) {
         $requeteSQL = 'SELECT * FROM acteur WHERE id_acteur = :id';
         $requete = $db->prepare( $requeteSQL );
         $acteurList = $requete->execute( [ 'id' => $_GET[ 'id' ] ] );
@@ -87,6 +87,7 @@ if (isset($_POST['envoyer'])) {
 
 ?>
 </div>
+
 <div name="formulaire_commentaire">
 <?php //parti commentaire
 echo $_SESSION[ 'nom' ];
@@ -96,10 +97,32 @@ echo 'peut poster un commentaire'; ?>
 <input type = 'submit' name = 'envoyer'>
 </form>
 </div>
-<?php } } ?>
+
+<?php } else {
+    header('Location: home.php');
+} } ?>
+
 </section>
 <footer>
-<?php include('footer.php'); ?>
+<article class="contact">
+<h3>Contact</h3>
+<ul>
+    <li><p>Adresse: .......</p></li>
+    <li><p>Téléphone:......</p></li>
+    <li><p>E-mail:.........</p></li>
+</ul>
+</article>
+	
+<article class="bouton_reseaux">
+<h3>Nos réseaux</h3>
+<ul>
+    <li><a href="https://twitter.com/share">Tweeter</a></li>
+    <li><a href="mailto:jlnko@hotmail.fr">Contactez-moi</a></li>
+    <li><a href="https://facebook.com/share">Facebook</a></li>
+</ul>
+</article>
+	
+<h4 class="copyright">Copyright: GBAF Année 2022</h4>
 </footer>
 </body>
 </html>
