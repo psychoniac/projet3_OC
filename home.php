@@ -18,8 +18,9 @@ if (!empty($_SESSION)) {
 </head>
 
 <body>
+<div class=container>    
 <header>
-<?php include( 'en_tete.php' );?>
+	<img class="logo_gbaf" src="img/logo.png" alt="logo couleur de la société" width="160" height="160" title="logo de l'entreprise">
 </header>
 
 <div class = 'presentation'>
@@ -33,9 +34,8 @@ Chaque salarié pourra ainsi poster un commentaire et donner son avis.
 </p>
 </div>
 
-<section class = 'partenaire'>
-<h3>Les partenaires</h3>
-<div class = 'acteur'>
+<div class = 'partenaire'>
+<h2>Présentation des partenaires</h2>
 <?php
 $requete = $db->prepare( 'SELECT * FROM acteur' );
 $requete->execute();
@@ -44,24 +44,47 @@ $listeActeurs = $requete->fetchAll();
 foreach ( $listeActeurs as $acteur )
 {
     ?>
-    <img class = 'logo' src = "img/<?php echo $acteur['logo']; ?>">
-    <p><div class = 'nom_acteur'><?php echo $acteur[ 'acteur' ];
-    ?></div></p>
-    <p><div class = 'descritpion'>
-    <?php
-    $description = substr( $acteur[ 'description' ], 0, 100 ).'...';
+    <div>
+    <div class='logo'>
+    <img src = "img/<?php echo $acteur['logo']; ?>" width=200px height=200px>
+    </div>
+    <h3><?php echo $acteur[ 'acteur' ]; ?></h3>
+    <div class = 'descritpion'>
+    <?php $description = substr( $acteur[ 'description' ], 0, 100 ).'...';
     echo $description;
     ?>
-    <a href = "acteur.php?id=<?php echo $acteur['id_acteur'];?> & nom=<?php echo $acteur['acteur'];?>">Lire la suite</a> </div></p>
-   
+    <a href = "acteur.php?id=<?php echo $acteur['id_acteur'];?> & nom=<?php echo $acteur['acteur'];?>">Lire la suite</a> 
+    </div>
+    </div>
     <?php
+    
 }
 ?>
 </div>
-</section>
+<div class="deconnexion">
 <a name="deconnexion" href = "deconnexion.php">Se déconnecter</a>
+</div>
 <footer>
-<?php include( 'footer.php' );?>
-</footer>
+	<article class="contact">
+		<h3>Contact</h3>
+		<ul>
+			<li><p>Adresse: .......</p></li>
+			<li><p>Téléphone:......</p></li>
+			<li><p>E-mail:.........</p></li>
+		</ul>
+	</article>
+	
+	<article class="bouton_reseaux">
+		<h3>Nos réseaux</h3>
+		<ul>
+			<li><a href="https://twitter.com/share">Tweeter</a></li>
+			<li><a href="mailto:jlnko@hotmail.fr">Contactez-moi</a></li>
+			<li><a href="https://facebook.com/share">Facebook</a></li>
+		</ul>
+	</article>	
+<h4 class="copyright">Copyright: GBAF Année 2022</h4>
+</footer>	
+
+</div>
 </body>
 </html>
