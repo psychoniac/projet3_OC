@@ -4,30 +4,27 @@
 if (isset($_SESSION)) {
     echo $_SESSION['nom'];
     echo $_SESSION['prenom'];    
+} else {
+	header('Location: login.php');
 }
-?>
-
-
-
-
-
-
 
 	//on va traiter le formulaire ici
 	//on check qu'aucun utilisateur est connecté, on check les variables du formulaire
-	if (!isset($_SESSION['id']) && !empty($_POST['changer_password']) && !empty($_POST['nouveau_password']) && !empty($_POST['confirm_password'])){
-		// code...
+	if  (isset($_POST['changer_password'])) {
+		if (!empty($_POST['nouveau_password']) && !empty($_POST['confirm_password'])) {
+			$password1 = htmlspecialchars($_POST['nouveau_password']);
+			$password2 = htmlspecialchars($_POST['confirm_password']);
+			$userConnect = htmlspecialchars($_SESSION['id']);
+			if ($password1 == $password2) {
+				$requete = $db->prepare("UPDATE account SET 'password' = '$password2' WHERE 'user_id' = '$userConnect'");
+				$new_password = $requete->execute();
+				echo "votre password a bien ete mis à jour";
+			} else {
+				echo "les 2 mots de passe sont différent";}	
+		} else {
+		echo "tous les champs doivent être rempli";
+		}
 	}
-
-
-
-
-
-
-
-
-
-
 ?>
 
 <<!DOCTYPE html>
