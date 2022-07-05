@@ -1,10 +1,10 @@
 <?php session_start();
  include( 'connexion_bdd.php' );
- if (isset($_SESSION)) {
+ if (!empty($_SESSION)) {
         echo $_SESSION['nom'];
         echo $_SESSION['prenom']; 
         echo "vous êtes bien connecté."; 
-         } else {
+} else {
             header('Location: login.php');
          }  
 //on se place dans le formulaire 
