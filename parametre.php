@@ -26,7 +26,7 @@ if ( isset( $_POST[ 'changement_parametre' ] ) && isset( $_SESSION[ 'username' ]
         //si le username n'existe pas on modifie les données de la base
         if ( $usernameExist == 0 )
         {
-            $requete2 = $db->prepare ("UPDATE 'account' SET 'nom'= '$nom', 'prenom' = '$prenom', 'username' = '$username', 'password' = '$password', 'question' = '$question', 'reponse' = '$reponse' WHERE 'username' = '$usernameLogged')");
+            $requete2 = $db->prepare ("UPDATE 'account' SET 'nom'= '$nom', 'prenom' = '$prenom', 'username' = '$username', 'password' = '$password', 'question' = '$question', 'reponse' = '$reponse' WHERE 'username' = '$usernameLogged' ");
 			$requete2 = $db->execute(array(
 				'nom' => $nom,
 				'prenom' => $prenom,
